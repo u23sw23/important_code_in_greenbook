@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Dog Green Book</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('../static/public/background.jpg'); /* 修改路径确保正确 */
+            background-size: cover;
+            background-attachment: fixed;
+            color: #222; /* 加深字体颜色 */
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 200px;
+            z-index: 99;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(175, 82, 5, 0.2);
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('dog-icon.png'); /* 添加狗狗简笔画的路径 */
+            background-size: cover;
+            top: 10px;
+            right: 10px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        section {
+            width: 90%; /* 限制宽度以保持内容整齐 */
+            max-width: 800px; /* 最大宽度 */
+            padding: 20px;
+            margin: 20px 0;
+            background-color: rgba(255, 255, 255, 0); /* 全透明背景 */
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden; /* 确保内容不超出边界 */
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url('paw-print.png'); /* 添加爪印图标的路径 */
+            background-size: cover;
+            top: 10px;
+            left: 10px;
+        }
+
+        h3 {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: #d77d33;
+            margin-top: 0;
+            position: relative;
+        }
+
+        h3::after {
+            content: '';
+            display: inline-block;
+            width: 20px; /* 调整爪印大小 */
+            height: 20px; /* 调整爪印大小 */
+            background-image: url('paw-print.png'); /* 使用相同的爪印图标 */
+            background-size: cover;
+            margin-left: 10px; /* 右侧间距 */
+            vertical-align: middle; /* 垂直对齐 */
+        }
+
+        .team-member {
+            text-align: center ; /* 向左对齐 */
+            margin: 20px 0;
+            padding: 10px;
+            background-color: rgba(240, 240, 240, 0); /* 全透明背景 */
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center; /* 向左对齐 */
+            padding: 10px;
+            margin: 20px 0;
+            background-color: rgba(255, 255, 255, 0); /* 全透明背景 */
+            color: #af5205;
+            border-top: 5px solid #efe9e513;
+        }
+
+        .social-media a {
+            margin: 0 10px;
+            color: #af5205;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .social-media a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.3em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            section {
+                padding: 15px; /* 在小屏幕上减小内边距 */
+            }
+        }
+
+        .logo {
+            font-size: 2em;
+            color: #af5205;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 5px rgba(175, 82, 5, 0.1);
+            border: 1px solid rgba(175, 82, 5, 0.2);
+        }
+
+        .navigation a {
+            position: relative;
+            font-size: 1.1em;
+            color: #af5205;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 0;
+        }
+
+        .navigation a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 100%;
+            height: 3px;
+            background: #af5205;
+            border-radius: 5px;
+            transform: scaleX(0);
+            transition: transform .5s;
+        }
+
+        .navigation a:hover::after {
+            transform: scaleX(1);
+        }
+
+        main {
+            margin-top: 100px; /* 添加这一行 */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2 class="logo">Puppy Green Book</h2>
+        <nav class="navigation">
+            <a href="/home">Home</a>
+            <a href="/about">About</a>
+            <a href="/map">Map</a>
+            <a href="/user">Account</a>
+            <a href="/login">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="brand-story">
+            <h3>Brand Story</h3>
+            <p>The Pet-Friendly Travel Project was born out of a deep understanding of the challenges faced by pet owners in their daily lives and during travel. As pet companionship becomes an integral part of modern life, we recognized the need for a comprehensive resource that empowers pet owners to explore the world with their furry friends without the stress of uncertainty.</p>
+            <p>Our story begins with countless tales of frustration and disappointment from pet owners like Xiaonan, who yearned to share everyday experiences and adventures with their pets but were often met with barriers. We saw a clear gap in the market—a lack of reliable and up-to-date information on pet-friendly establishments. This led to the vision of creating a platform that not only collects but also verifies and updates information on pet-friendly locations.</p>
+            <p>From the initial idea, our brand has grown to embody the spirit of community and collaboration. We believe in the power of shared experiences and the bond between pets and their owners. Our brand story is one of bringing people and their pets closer together, breaking down barriers, and fostering a more inclusive and pet-friendly world.</p>
+            <p>Through the Pet-Friendly Travel Project, we aim to build a community where every journey is a shared experience, and no pet owner has to leave their beloved companion behind. Our brand stands for trust, convenience, and the joy of exploring new places with your pet by your side.</p>
+        </section>
+
+        <section class="mission-vision">
+            <h3>Mission and Vision</h3>
+            <p><strong>Mission:</strong> To provide pet owners with a seamless and worry-free travel experience by offering the most comprehensive, up-to-date database of pet-friendly locations. Our mission is to ensure that every pet owner can easily find and access information about pet-friendly restaurants, hotels, shops, and public spaces, thereby enhancing the joy and convenience of traveling with pets.</p>
+            <p><strong>Vision:</strong> Our vision is to create a world where traveling with pets is not just a possibility but a norm. We envision a future where pet owners can confidently explore new destinations, knowing that they have access to accurate and reliable information about pet-friendly amenities. We strive to foster a community that supports and encourages the inclusion of pets in everyday activities and travel, ultimately leading to a more pet-friendly society.</p>
+        </section>
+
+        <section class="team-intro">
+            <h3>Team Introduction</h3>
+            <div class="team-member">
+                <h4>Ziyuan Wu</h4>
+                <p>Project Manager</p>
+            </div>
+            <div class="team-member">
+                <h4>Shiyu Wang</h4>
+                <p>Developer</p>
+            </div>
+            <div class="team-member">
+                <h4>Xiaoqi Zhou</h4>
+                <p>Developer</p>
+            </div>
+            <div class="team-member">
+                <h4>Zixuan Zhan</h4>
+                <p>Developer</p>
+            </div>
+            <div class="team-member">
+                <h4>Yifan Wu</h4>
+                <p>Dataset Administrator</p>
+            </div>
+            <div class="team-member">
+                <h4>Ningyu Liu</h4>
+                <p>Dataset Administrator</p>
+            </div>
+            <div class="team-member">
+                <h4>Sien Tang</h4>
+                <p>Dataset Administrator</p>
+            </div>
+            <div class="team-member">
+                <h4>Yanan Gong</h4>
+                <p>Security Maintenance & Test Team</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <h3>Contact Us</h3>
+        <p>Phone: 123-456-7890</p>
+        <p>Email: contact@doggreenbook.com</p>
+        <div class="social-media">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+        </div>
+    </footer>
+</body>
+</html>

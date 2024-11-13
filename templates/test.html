@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发言板</title>
+</head>
+<body>
+    <h1>发言板</h1>
+    <form action="{{ url_for('post') }}" method="post">
+        <label for="username">用户名:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="content">发言:</label>
+        <textarea id="content" name="content" required></textarea><br><br>
+        <input type="submit" value="发言">
+    </form>
+    <h2>user comments:</h2>
+    {% for post in posts %}
+        <div>
+            <strong>{{ post.username }}</strong>:
+            {{ post.content }}
+            <em>({{ post.timestamp }})</em>
+        </div>
+    {% else %}
+        <p>No posts found.</p>
+    {% endfor %}
+</body>
+</html>

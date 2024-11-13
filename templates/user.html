@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puppy Green Book - User Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* 基本样式 */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('../static/public/background.jpg'); /* 设置背景图片 */
+            background-size: cover; /* 背景自适应大小 */
+            background-position: center; /* 背景居中显示 */
+            background-attachment: fixed; /* 背景固定不随页面滚动 */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            position: relative;
+            padding-top: 60px; /* 为导航栏留出空间 */
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 250px;
+            background: rgba(210, 228, 238, 0.059); /* 增加透明度 */
+            color: rgb(250, 246, 246);
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(30, 54, 80, 0.546);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .sidebar h2 {
+            color: #d77d33;
+            margin-bottom: 40px;
+            font-size: 1.8em;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #d77d33;
+            margin: 10px 0;
+            font-size: 1.2em;
+            font-family: 'Poppins', sans-serif; /* 更改为可爱的字体 */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: block;
+            box-shadow: 2px 0 5px rgba(146, 192, 238, 0.187);
+        }
+
+        .sidebar a:hover {
+            background-color: #82a6df4b;
+            transform: scale(1.05);
+        }
+
+        /* 为分类栏添加图标 */
+        .sidebar a::before {
+            content: '\1F43E'; /* 狗的emoji作为图��� */
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        /* 内容区样式 */
+        .content {
+            flex: 1;
+            padding: 30px;
+            background-color: rgba(242, 224, 224, 0); /* 增加透明度 */
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 2px 0 5px rgba(30, 54, 80, 0.546);
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: #383838;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .content-section {
+            display: none;
+            padding: 20px;
+            background-color: rgba(242, 224, 224, 0); /* 增加透明度 */
+            border-radius: 10px;
+            box-shadow: 2px 0 5px rgba(30, 54, 80, 0.546);
+            margin-bottom: 30px;
+        }
+
+        .active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #d77d33;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: rgba(242, 224, 224, 0); /* 增加透明度 */
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 图片预览样式 */
+        #pet-photo-preview {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* 弹出提示框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 添加导航栏样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 200px;
+            z-index: 99;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(175, 82, 5, 0.2);
+        }
+
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 5px 20px;
+            border-radius: 25px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 5px rgba(175, 82, 5, 0.1);
+            border: 1px solid rgba(175, 82, 5, 0.2);
+        }
+
+        .navigation a {
+            position: relative;
+            font-size: 1em;
+            color: #af5205;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .navigation a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 100%;
+            height: 3px;
+            background: #af5205;
+            border-radius: 5px;
+            transform: scaleX(0);
+            transition: transform .5s;
+        }
+
+        .navigation a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .logo {
+            font-size: 1.6em;
+            color: #af5205;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        /* 调整地图容器样式以适应导航栏 */
+        #mapContainer {
+            margin-top: 80px; /* 为导航栏留出空间 */
+            height: calc(100vh - 80px);
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- 添加导航栏 -->
+    <header>
+        <h2 class="logo">Puppy Green Book</h2>
+        <nav class="navigation">
+            <a href="/home">Home</a>
+            <a href="/about">About</a>
+            <a href="/map">Map</a>
+            <a href="/user">Account</a>
+            <a href="/login">Login</a>
+        </nav>
+    </header>
+
+    <!-- 左侧导航栏 -->
+    <div class="sidebar">
+        <h2>Puppy Green Book</h2>
+        <a id="basic-info-link">Basic Information</a>
+        <a id="pet-info-link">Pet Information</a>
+        <a id="pet-features-link">Pet Features</a>
+        <a id="entry-conditions-link">Entry Conditions</a>
+    </div>
+
+    <!-- 右侧内容区 -->
+    <div class="content">
+        <h1>User Profile</h1>
+
+        <!-- Basic Information Section -->
+        <div id="basic-info" class="content-section active">
+            <h2>Basic Information</h2>
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Your Username" disabled>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Your Email" disabled>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" placeholder="Your Phone (optional)" disabled>
+
+            <button id="edit-button">Edit</button>
+            <button id="save-button" style="display:none;">Save</button>
+        </div>
+
+        <!-- Pet Information Section -->
+        <div id="pet-info" class="content-section">
+            <h2>Pet Information</h2>
+            <label for="pet-name">Pet Name:</label>
+            <input type="text" id="pet-name" placeholder="Your Pet's Name" disabled>
+
+            <label for="pet-species">Pet Species:</label>
+            <input type="text" id="pet-species" placeholder="Dog, Cat, etc." disabled>
+
+            <label for="pet-age">Pet Age:</label>
+            <input type="number" id="pet-age" placeholder="Pet's Age" disabled>
+
+            <label for="pet-weight">Pet Weight (kg):</label>
+            <input type="number" id="pet-weight" placeholder="Pet's Weight" disabled>
+
+            <label for="pet-gender">Pet Gender:</label>
+            <select id="pet-gender" disabled>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <label for="pet-photo">Upload Pet Photo:</label>
+            <input type="file" id="pet-photo" accept="image/*">
+            <img id="pet-photo-preview" src="" alt="Pet Photo Preview" style="display:none;"/>
+
+            <button id="pet-edit-button">Edit</button>
+            <button id="pet-save-button" style="display:none;">Save</button>
+        </div>
+
+        <!-- Pet Features Section -->
+        <div id="pet-features" class="content-section">
+            <h2>Pet Features</h2>
+            <label for="pet-shedding">Does your pet shed a lot?</label>
+            <select id="pet-shedding" disabled>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <label for="pet-energy-level">Energy Level:</label>
+            <select id="pet-energy-level" disabled>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+
+            <button id="features-edit-button">Edit</button>
+            <button id="features-save-button" style="display:none;">Save</button>
+        </div>
+
+        <!-- Entry Conditions Section -->
+        <div id="entry-conditions" class="content-section">
+            <h2>Entry Conditions</h2>
+            <label for="entry-tags">Tags:</label>
+            <select id="entry-tags" multiple disabled>
+                <option value="dog-friendly">Dog Friendly</option>
+                <option value="cat-friendly">Cat Friendly</option>
+                <option value="leash-required">Leash Required</option>
+                <option value="fenced-area">Fenced Area</option>
+            </select>
+
+            <button id="entry-edit-button">Edit</button>
+            <button id="entry-save-button" style="display:none;">Save</button>
+        </div>
+
+        <footer>
+            &copy; 2024 Puppy Green Book
+        </footer>
+    </div>
+
+    <!-- 弹出提示框 -->
+    <div id="info-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="modal-close">&times;</span>
+            <p>Please complete your profile and pet information.</p>
+        </div>
+    </div>
+
+    <script>
+        // 显示弹出提示框
+        window.onload = function() {
+            document.getElementById('info-modal').style.display = 'flex';
+            loadInfo(); // 加载保存的信息
+        };
+
+        // 关闭弹出提示框
+        document.getElementById('modal-close').onclick = function() {
+            document.getElementById('info-modal').style.display = 'none';
+        };
+
+        // 切换不同的内容区域
+        const sections = {
+            'basic-info-link': 'basic-info',
+            'pet-info-link': 'pet-info',
+            'pet-features-link': 'pet-features',
+            'entry-conditions-link': 'entry-conditions'
+        };
+
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', function () {
+                document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+                document.getElementById(sections[this.id]).classList.add('active');
+            });
+        });
+
+        // 照片上传和预览功能
+        const petPhotoInput = document.getElementById('pet-photo');
+        const petPhotoPreview = document.getElementById('pet-photo-preview');
+
+        petPhotoInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    petPhotoPreview.src = e.target.result;
+                    petPhotoPreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 编辑和保存功能
+        function toggleEdit(sectionId) {
+            const inputs = document.querySelectorAll(`#${sectionId} input, #${sectionId} select`);
+            const isEditing = !inputs[0].disabled; // 当前是否在编辑状态
+            inputs.forEach(input => {
+                input.disabled = isEditing; // 切换输入框的禁用状态
+            });
+
+            document.getElementById(`${sectionId}-edit-button`).style.display = isEditing ? 'inline' : 'none'; // 隐藏编辑按钮
+            document.getElementById(`${sectionId}-save-button`).style.display = isEditing ? 'none' : 'inline'; // 显示保存按钮
+        }
+
+        function saveInfo(sectionId) {
+            const inputs = document.querySelectorAll(`#${sectionId} input, #${sectionId} select`);
+            const data = {};
+
+            inputs.forEach(input => {
+                data[input.id] = input.value; // 保存每个输入框的值
+            });
+
+            localStorage.setItem(sectionId, JSON.stringify(data)); // 保存到 localStorage
+            alert('Information saved for ' + sectionId.replace('-', ' '));
+            toggleEdit(sectionId); // 保存后切换回编��状态
+        }
+
+        function loadInfo() {
+            const sections = ['basic-info', 'pet-info', 'pet-features', 'entry-conditions'];
+            sections.forEach(sectionId => {
+                const data = JSON.parse(localStorage.getItem(sectionId));
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        const input = document.getElementById(key);
+                        if (input) {
+                            input.value = data[key]; // 填入保存的信息
+                        }
+                    });
+                }
+            });
+        }
+
+        // 绑定事件
+        document.getElementById('edit-button').addEventListener('click', () => toggleEdit('basic-info'));
+        document.getElementById('save-button').addEventListener('click', () => saveInfo('basic-info'));
+
+        document.getElementById('pet-edit-button').addEventListener('click', () => toggleEdit('pet-info'));
+        document.getElementById('pet-save-button').addEventListener('click', () => saveInfo('pet-info'));
+
+        document.getElementById('features-edit-button').addEventListener('click', () => toggleEdit('pet-features'));
+        document.getElementById('features-save-button').addEventListener('click', () => saveInfo('pet-features'));
+
+        document.getElementById('entry-edit-button').addEventListener('click', () => toggleEdit('entry-conditions'));
+        document.getElementById('entry-save-button').addEventListener('click', () => saveInfo('entry-conditions'));
+    </script>
+</body>
+</html>

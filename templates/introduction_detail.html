@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>introduction</title>
+    <link rel="stylesheet" href="../static/introduction_style.css">
+    <link rel="stylesheet" href="../static/font_stars/iconfont.css">
+</head>
+<body>
+    <header>
+        <h2 class="logo">Puppy Green Book</h2>
+        <nav class="navigation">
+            <a href="/home">Home</a>
+            <a href="/about">About</a>
+            <a href="/map">Map</a>
+            <a href="/user">Account</a>
+            <a href="/login">Login</a>
+        </nav>
+    </header>
+    <h1>{{introduction.name}}</h1> <br> <br>
+    <img src="{{introduction.image_url}}" alt="{{ introduction.name }}">
+    <br> <br>
+    <h2>Introduction</h2>
+    <br>
+    <p>{{introduction.description}}</p>
+    <br><br><br>
+    <div class="stars_container">
+        <div class="stars">
+            scroe:
+            <span class="iconfont icon-pingfenxingxing"></span>
+            <span class="iconfont icon-pingfenxingxing"></span>
+            <span class="iconfont icon-pingfenxingxing"></span>
+            <span class="iconfont icon-pingfenxingxing"></span>
+            <span class="iconfont icon-pingfenxingxing"></span>
+            <span id="score"></span>
+        </div>
+    </div>
+    <div class="comment-container">
+    <form method="post" class="comment">
+        <label for="username">username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        
+        <input type="hidden" id="rating" name="rating" value="0">
+        
+        <label for="content">leave your comment here:</label>
+        <textarea id="content" name="content" placeholder="please give your comment here..." required></textarea><br><br>
+
+        <input type="submit" value="commit" class="btn">
+    </form>
+</div>
+    <div class="user-container">
+    <h2>user comments:</h2>
+    {% for post in posts %}
+        <div>
+            <strong>{{ post.username }}</strong>:
+            {{ post.content }}
+            <br>
+            <span class="comment-rating">
+                {% for i in range(post.rating|int) %}
+                    <span class="iconfont icon-pingfenxingxing filled"></span>
+                {% endfor %}
+                {% if post.rating % 1 == 0.5 %}
+                    <span class="iconfont icon-pingfenxingxing half-filled"></span>
+                {% endif %}
+                {% for i in range(5 - post.rating|int - (1 if post.rating % 1 == 0.5 else 0)) %}
+                    <span class="iconfont icon-pingfenxingxing"></span>
+                {% endfor %}
+            </span>
+            <em>({{ post.timestamp }})</em>
+        </div>
+    {% else %}
+        <p>No posts found.</p>
+    {% endfor %}
+    </div>
+    <script src="../static/introduction_script.js"></script>
+</body>
+</html>

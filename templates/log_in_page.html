@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>log in</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/font_sign/iconfont.css">
+    <link rel="stylesheet" href="../static/font_sign2/iconfont.css">
+    <link rel="stylesheet" href="../static/font_username/iconfont.css">
+    <link rel="stylesheet" href="../static/font_search/iconfont.css">
+</head>
+<body>
+    <header>
+        <h2 class="logo">Puppy Green Book</h2>
+        <nav class="navigation">
+            <a href="/login">Login</a>
+        </nav>
+    </header>
+    <div class="wrapper">
+        <div class="form-box login">
+            <h2>Login</h2>
+            <form action="/" method="post">
+                <div class="input-box">
+                    <span class="icon">
+                        <span class="iconfont icon-email"></span>
+                    </span>
+
+                    <input type="text" id="username" name="username" required>
+                    <label for="username">Username</label>
+
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <span class="iconfont icon-lock"></span>
+                </span>
+
+                    <input type="password" id="password" name="password" required>
+                    <label for="password">Password</label>
+
+                </div>
+                <div class="remember-forgot">
+                    <label for=""><input type="checkbox">
+                    Remember me</label>
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="login-register">
+                    <p>Don't have an account? <a href="#" class="register-link">Register</a></p>
+                </div>
+            </form>
+
+            <div class="form-box register">
+                <h2>Registration</h2>
+                <form action="/" method="post">
+                    <div class="input-box">
+                        <span class="icon">
+                            <span class="iconfont icon-user"></span>
+                    </span>
+                        <input type="text" name="username" required>
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon">
+                            <span class="iconfont icon-lock"></span>
+                    </span>
+                        <input type="password" name="password" required>
+                        <label for=password">Password</label>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="icon">
+                            <span class="iconfont icon-email"></span>
+                    </span>
+                        <input type="email" name="email" required>
+                        <label for="email">Email</label>
+                    </div>
+
+                    <div class="login-register">  <!--太诡异了，放下面的button下面就不行了-->
+                        <p>Already have an account? <a href="#" class="login-link">Login</a></p>
+                    </div>
+
+                    <button type="submit" class="btn"><a href="#" class="login-link">Register</a></button>
+                </form>
+            </div>
+        </div>
+    </div>
+ <script src="../static/login_script.js"></script>
+</body>
+</html>
+
